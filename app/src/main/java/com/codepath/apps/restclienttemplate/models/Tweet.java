@@ -9,6 +9,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.codepath.apps.restclienttemplate.TimeFormatter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,8 @@ public class Tweet {
 
     @Ignore
     public User user;
+    public String time;
+
 
     //empty constructor for parceler library:
     public Tweet(){}
@@ -53,28 +57,10 @@ public class Tweet {
         User user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.user = user;
         tweet.userId = user.id;
+        // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
+        tweet.time = TimeFormatter.getTimeDifference(tweet.createdAt);
         return tweet;
     }
-    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-    public String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-
-        String relativeDate = "";
-        try {
-            //long dateMillis = Objects.requireNonNull(sf.parse(rawJsonDate)).getTime();
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils
-                    .getRelativeTimeSpanString(dateMillis,System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS)
-                    .toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return relativeDate;
-    }
-
     public static List<Tweet> fromJasonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
@@ -82,7 +68,4 @@ public class Tweet {
         }
         return tweets;
     }
-
-
-
 }

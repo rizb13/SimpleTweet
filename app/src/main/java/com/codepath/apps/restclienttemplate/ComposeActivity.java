@@ -3,11 +3,15 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -16,16 +20,19 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
+import java.io.CharArrayWriter;
+
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    public static final int MAX_TWEET_LENGTH = 140;
+    public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";
 
     EditText etCompose;
     Button btnTweet;
     String tweetContent;
+    TextView tvCharCount;
 
     TwitterClient client;
 
@@ -38,6 +45,33 @@ public class ComposeActivity extends AppCompatActivity {
 
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
+        tvCharCount = findViewById(R.id.tvCharCount);
+
+        etCompose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Fires right as the text is being changed (even supplies the range of text)
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // Fires right before text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Fires right after the text has changed
+
+                int charsLeft = MAX_TWEET_LENGTH - s.toString().length();
+                if (charsLeft < 0) {
+                    tvCharCount.setTextColor(Color.RED);
+                }
+                tvCharCount.setText(String.valueOf(charsLeft));
+            }
+
+        });
+
 
         //add click listener on button:
         btnTweet.setOnClickListener(new View.OnClickListener() {

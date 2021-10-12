@@ -1,5 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import static com.codepath.apps.restclienttemplate.TimeFormatter.getTimeDifference;
+
+
 import android.content.Context;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -86,7 +89,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
-            tvRelativeTimestamp.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
+            tvRelativeTimestamp.setText(tweet.time);;
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
 
         }

@@ -8,5 +8,7 @@
     <string name="what_s_happening">What\'s happening.?</string>
     <string name="tweet">Tweet</string>
     <string name="compose">Compose</string>
+    <string name="textview">TextView</string>
+    <string name="char_count">char_count</string>
 
 </resources>

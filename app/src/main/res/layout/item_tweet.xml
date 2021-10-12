@@ -39,17 +39,10 @@
         android:linksClickable="true"/>
 
     <TextView
+        android:id="@+id/tvRelativeTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvRelativeTimestamp"
-        android:textStyle="italic"
-        android:textSize="12sp"
-        android:focusable="false"
-        android:fontFamily="sans-serif-light"
-        android:gravity="bottom"
-        android:layout_alignTop="@+id/tvScreenName"
-        android:layout_alignBottom="@+id/tvScreenName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="34dp"
+        android:text="@string/textview" />
 </RelativeLayout>
